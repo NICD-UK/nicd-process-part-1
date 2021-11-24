@@ -1,0 +1,176 @@
+---
+title: "NICD Data Science Process"
+subtitle: "Part 1"
+author: "Matthew Edwards"
+date: "04/11/2021"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Data Science Processes
+
+A **data science process** includes:
+
+1. data science workflow (e.g. CRISP-DM)
+2. collaboration framework (e.g. Scrum)
+
+The data science workflow provides the **what** and the collaboration framework provides the **how**. A popular example of a data science process is:
+
+- **Microsoft**: Team Data Science Process (TDSP)
+
+## Project Templates
+
+The Microsoft TDSP also includes a **project template** in addition to a data science workflow and collaboration framework. Other data science templates include
+
+1. [Cookiecutter Data Science](https://drivendata.github.io/cookiecutter-data-science/) (Python)
+2. [ProjectTemplate](http://projecttemplate.net) (R)
+
+The *focus* of this presentation is on project templates. Data science workflows and collaboration frameworks will follow.
+
+## Project Templates
+
+A **good** project template should be:
+
+1. broadly applicable
+2. encourage good practice
+3. language agnostic
+
+Developing a broadly applicable project template requires defining some broad data science terms. These terms are:
+
+- **data question**
+- **data source**
+- **data product**
+- **data pipeline**.
+
+## Data Question
+
+A **data question** is a question related to data, introduced in [What is the Question?](https://www.aaas.org/sites/default/files/Stats_What_Question_2015.pdf?g_zGQR5m3rDJqwXqJ3DxLI5pXZ3hNdHk) There are six types of data question:
+
+1. descriptive
+2. exploratory
+3. inferential
+4. predictive
+5. causal
+6. mechanistic
+
+## Data Source
+
+A data question requires one or more relevant datasets. A dataset is available from a **data source**. Data sources include:
+
+- databases
+- flat files (e.g. CSV file)
+- web services (e.g. web API)
+
+**Note**: Different data questions require different data sources.
+
+## Data Product
+
+A data question requires an answer. The answer to a data question is a **data product**. Data products include:
+
+- tables
+- figures
+- reports
+- models
+
+**Note**: Different data questions require different data products.
+
+## Data Pipeline
+
+A **data pipeline** imports data from one or more data sources and transforms that data into a data product that is deployed. This could be performed in a single `pipeline.script`:
+
+![](figures/pipeline.png){width=100%}
+
+## Project Template Development
+
+The proposed project template *currently* has four directories:
+
+1. `src/` directory
+2. `data/` directory
+3. `reports/` directory
+4. `notebooks/` directory
+
+The **structure** and **reasoning** for these directories follows. The emphasis is on encouraging good practice.
+
+## `src/` Directory
+
+Different data questions require different data pipelines (different data sources and products). It is important that data pipelines can be efficiently **developed** and **maintained** when the data question *inevitably* changes. This can be facilitated by:
+
+1. question independent code in `clean/` directory
+2. a `clean.script` for each data source
+3. question dependent code in `wrangle/` directory
+4. a `wrangle.script` for each data question
+5. model dependent code in `model/` directory
+6. a `model.script` for each model-based data product
+
+Other data products will follow.
+
+## `src/` Directory
+
+![](figures/clean-wrangle-model.png){width=100%}
+
+## `src/` Directory
+
+![](figures/sources-deploys.png){width=100%}
+    
+## `src/` Directory
+
+![](figures/models.png){width=100%}
+
+## `data/` Directory
+
+The clean, wrangle and model scripts should write data to different data directories:
+
+1. `clean.script` writes to `data/clean/`
+2. `wrangle.script` writes to `data/wrangle/`
+3. `model.script` writes to `data/model/`
+
+The `clean/` and `wrangle/` data directories match the `staging/` and `production/` directories in the [cloud data platform](https://www.manning.com/books/designing-cloud-data-platforms) architecture.
+
+## `reports/` Directory
+
+Tables and figures in reports are the data products that answer descriptive and exploratory questions. Reports require many artefacts (tables, figures and files) that should be contained in a report directory (`reports/<report_name>/`).
+
+## `notebooks/` Directory
+
+In order to populate the pipeline scripts with transformations, data exploration is required. Data exploration is best performed in notebooks (e.g. `.ipynb` and `.Rmd` files). It is recommended that:
+
+1. notebooks should *not* include pipeline transformations
+2. notebooks are not used for collaboration
+3. notebooks use naming: `<ghuser>-<notebook_name>`
+
+These are also recommended for the `Cookiecutter Data Science` template.
+
+## NICD Project Template
+
+```
+README.md
+config.yml
+data/
+├─ clean/
+├─ model/
+├─ raw/
+├─ wrangle/
+notebooks/
+reports/
+src/
+├─ clean/
+│  ├─ clean.script
+├─ model/
+│  ├─ model.script
+├─ wrangle/
+│  ├─ wrangle.script
+```
+
+## Further Work
+
+1. `Makefile` for reproducibility
+2. Python and R example scripts
+
+## Further Work
+
+1. Data Science Workflows
+2. Collaboration Frameworks
+3. Team Roles
