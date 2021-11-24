@@ -141,8 +141,6 @@ In order to populate the pipeline scripts with transformations, data exploration
 2. notebooks are not used for collaboration
 3. notebooks use naming: `<ghuser>-<notebook_name>`
 
-These are also recommended for the `Cookiecutter Data Science` template.
-
 ## NICD Project Template
 
 ```
